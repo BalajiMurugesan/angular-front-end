@@ -7,20 +7,24 @@ import { User } from 'src/app/users-list/users-list.component';
 })
 export class UserDetailsService {
 
-  constructor(private httpClient: HttpClient) { }
+   hostName : string
+
+  constructor(private httpClient: HttpClient) {
+    this.hostName = window.location.host;
+  }
 
   getUserData(userId) {
     console.log(userId)
-    return this.httpClient.get<User>(`http://localhost:8080/users/${userId}`);   
+    return this.httpClient.get<User>(`${this.hostName}/${userId}`);
  }
 
  getAllUsers(){
    let headers = this.createHeaders()
-   return this.httpClient.get<User[]>('http://localhost:8080/users/', {headers});
+   return this.httpClient.get<User[]>(`${this.hostName}/users/`, {headers});
  }
- 
+
  deleteUser(userId) {
-   return this.httpClient.delete(`http://localhost:8080/users/${userId}`);
+   return this.httpClient.delete(`${this.hostName}/${userId}`);
  }
 
  createHeaders(){
@@ -28,10 +32,8 @@ export class UserDetailsService {
    let password = 'admin'
   let basicAuthHeader = 'Basic' + window.btoa(userName + ":" + password)
   let headers = new HttpHeaders({
-    Authorization : basicAuthHeader 
+    Authorization : basicAuthHeader
   });
   return headers
  }
 }
-
-
