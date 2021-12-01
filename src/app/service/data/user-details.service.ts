@@ -7,7 +7,7 @@ import { User } from 'src/app/users-list/users-list.component';
 })
 export class UserDetailsService {
 
-  hostName = ''
+   hostName : string
 
   constructor(private httpClient: HttpClient) {
     this.hostName = window.location.hostname;
